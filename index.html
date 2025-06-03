@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Kyrie | Creative Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="assets/website-icon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --purple-cornflower: #6B5B95;
+            --purple-light: #8474ac;
+            --purple-dark: #4a3d68;
+            --purple-transparent: rgba(107, 91, 149, 0.2);
+            --dark-gunmetal: #0a0a0a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Remove default cursor from all interactive elements */
+        * {
+            cursor: none !important;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: rgba(107, 91, 149, 0.3);
+            border: 2px solid var(--purple-cornflower);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transition: all 0.15s ease-out;
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--purple-cornflower);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: all 0.1s ease-out;
+        }        /* Interactive elements hover states */
+        a, button, .portfolio-item, .nav-dot, img, 
+        [onclick], [data-category], .social-links a {
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        /* Custom cursor states for all interactive elements */
+        a:hover ~ .custom-cursor,
+        button:hover ~ .custom-cursor,
+        .portfolio-item:hover ~ .custom-cursor,
+        .nav-dot:hover ~ .custom-cursor,
+        img:hover ~ .custom-cursor,
+        [onclick]:hover ~ .custom-cursor,
+        [data-category]:hover ~ .custom-cursor,
+        .social-links a:hover ~ .custom-cursor {
+            transform: scale(1.2);
+            background: rgba(107, 91, 149, 0.4);
+            border-color: var(--purple-light);
+            mix-blend-mode: normal;
+        }
+
+        a:hover ~ .cursor-dot,
+        button:hover ~ .cursor-dot,
+        .portfolio-item:hover ~ .cursor-dot,
+        .nav-dot:hover ~ .cursor-dot,
+        img:hover ~ .cursor-dot,
+        [onclick]:hover ~ .cursor-dot,
+        [data-category]:hover ~ .cursor-dot,
+        .social-links a:hover ~ .cursor-dot {
+            transform: scale(1.5);
+            background: var(--purple-light);
+            mix-blend-mode: normal;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--purple-cornflower);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--purple-light);
+        }
+
+        /* Hide scrollbar while maintaining functionality */
+        html {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }        /* Comment Bubble */
+        @keyframes floatBubble {
+            0% {
+                transform: translate(-5%, 0);
+                text-shadow: 0 0 20px var(--purple-transparent);
+            }
+            25% {
+                transform: translate(-2.5%, -10px);
+                text-shadow: 0 0 30px var(--purple-cornflower);
+            }
+            50% {
+                transform: translate(5%, 0);
+                text-shadow: 0 0 40px var(--purple-transparent);
+            }
+            75% {
+                transform: translate(2.5%, 10px);
+                text-shadow: 0 0 30px var(--purple-cornflower);
+            }
+            100% {
+                transform: translate(-5%, 0);
+                text-shadow: 0 0 20px var(--purple-transparent);
+            }
+        }
+
+        @keyframes floatTitle {
+            0% {
+                transform: translateY(0);
+                text-shadow: 0 0 20px var(--purple-transparent);
+            }
+            25% {
+                transform: translateY(-10px);
+                text-shadow: 0 0 30px var(--purple-cornflower);
+            }
+            50% {
+                transform: translateY(0);
+                text-shadow: 0 0 40px var(--purple-transparent);
+            }
+            75% {
+                transform: translateY(10px);
+                text-shadow: 0 0 30px var(--purple-cornflower);
+            }
+            100% {
+                transform: translateY(0);
+                text-shadow: 0 0 20px var(--purple-transparent);
+            }
+        }        .hero {
+            min-height: 40vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at center, var(--purple-transparent) 0%, transparent 70%);
+            border-bottom: 2px solid var(--purple-cornflower);
+            gap: 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Roboto Mono', sans-serif;
+            font-size: 4.5rem;
+            color: var(--purple-cornflower);
+            text-shadow: 0 0 20px var(--purple-transparent);
+            animation: floatTitle 8s ease-in-out infinite;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .hero p {
+            color: var(--purple-light);
+            letter-spacing: 3px;
+            animation: floatTitle 8s ease-in-out infinite;
+            animation-delay: 0.5s;
+            transform-style: preserve-3d;
+            background-color: (var(--purple-dark));
+            border: 1px solid var(--purple-cornflower);
+            border-radius: 10px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        /* Portfolio Grid */
+        .portfolio {
+            padding: 4rem 0;
+            background: linear-gradient(to bottom, transparent, var(--purple-transparent), transparent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(var(--purple-cornflower) 0.5px, transparent 0.5px),
+                linear-gradient(90deg, var(--purple-cornflower) 0.5px, transparent 0.5px);            background-size: 30px 30px;
+            opacity: 0.1;
+            z-index: 0;
+            animation: moveGrid 10s linear infinite alternate-reverse;
+            pointer-events: none;
+        }        @keyframes moveGrid {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(300px, -300px);
+            }
+        }
+
+        .portfolio-grid {
+            position: relative;
+            z-index: 1;
+            columns: 3 300px;
+            column-gap: 2rem;
+            padding: 0 4rem;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            margin-bottom: 2rem;
+            break-inside: avoid;
+            cursor: pointer;
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, var(--purple-cornflower), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .portfolio-item::after {
+            content: "COMMISSION BY @valkyrie_glasc";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-family: 'Roboto Mono', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: all 0.5s ease;
+            filter: saturate(0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-item:hover::before {
+            opacity: 0.7;
+        }
+
+        .portfolio-item:hover img {
+            transform: translateZ(20px);
+            filter: saturate(1.2);
+        }
+
+        .portfolio-item .item-title {
+            font-family: 'Roboto Mono', sans-serif;
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(10, 10, 10, 0.8);
+            color: var(--purple-light);
+            transition: all 0.3s ease;
+            z-index: 2;
+            opacity: 0;
+            margin-bottom: 10px;
+            margin-left: 0%;
+            border-radius: 15px;
+            align-items: center;
+        }
+
+        .portfolio-item:hover .item-title {
+            bottom: 0;
+            opacity: 1;
+        }
+
+        .portfolio-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 2rem;
+        }
+         
+        .category-btn {
+            font-family: 'Roboto Mono', sans-serif;
+            background: rgb(12, 11, 12);
+            border: 2px solid var(--purple-cornflower);
+            color: var(--purple-cornflower);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--purple-cornflower);
+            color: white;
+        }        /* Contact Section */
+        .contact {
+    min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, var(--purple-transparent) 0%, transparent 70%);
+    padding: 1.5rem 0;
+    margin: 0;
+}        .social-links {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--purple-cornflower);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            animation: dreamyFloat 6s ease-in-out infinite;
+        }
+
+        .social-links a:hover {
+            color: var(--purple-light);
+            transform: translateY(-5px);
+        }        /* Floating cornflower elements */
+        .floating-cornflower {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            background: var(--purple-cornflower);
+            opacity: 0.2;
+            border-radius: 50% 0 50% 50%;
+            filter: blur(3px);
+            pointer-events: none;
+            z-index: 0;
+            bottom: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.2; }
+            80% { opacity: 0.2; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+.scroll-bottom {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(107, 91, 149, 0.2);
+    border: 2px solid var(--purple-cornflower);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.scroll-bottom i {
+    color: var(--purple-cornflower);
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.scroll-bottom:hover {
+    background: var(--purple-cornflower);
+    transform: translateY(5px);
+}
+
+.scroll-bottom:hover i {
+    color: white;
+}        /* New styles for hero card */        .hero-card {
+            width: min(90%, 600px);
+            background: var(--dark-gunmetal);
+            border: 2px solid var(--purple-cornflower);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealCard 1s ease-out forwards;
+            box-shadow: 0 0 30px var(--purple-transparent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 600px) {
+            .hero-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+        }        @keyframes revealCard {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes revealAvatar {
+            from {
+                opacity: 0;
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            opacity: 0;
+            filter: blur(10px);
+            animation: revealAvatar 1s ease-out 0.3s forwards;
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid var(--purple-cornflower);
+            box-shadow: 0 0 20px var(--purple-transparent);
+        }
+
+        .avatar-bg {
+            position: absolute;
+            inset: -5px;
+            background: var(--purple-cornflower);
+            border-radius: 18px;
+            filter: blur(10px);
+            opacity: 0.3;
+            z-index: -1;
+        }        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .user-info > * {
+            opacity: 0;
+            filter: blur(5px);
+        }
+
+        .user-info h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            margin: 0;
+            opacity: 0;
+            filter: blur(5px);
+            animation: revealText 0.8s ease-out forwards 0.3s;
+        }
+
+        .user-info .title {
+            font-family: 'Roboto Mono', sans-serif;
+            color: var(--purple-light);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--purple-cornflower);
+            padding-bottom: 0.5rem;
+            opacity: 0;
+            filter: blur(5px);
+            animation: revealText 0.8s ease-out forwards 0.6s;
+        }
+
+        .user-info p {
+            opacity: 0;
+            filter: blur(5px);
+            animation: revealText 0.8s ease-out forwards 0.9s;
+        }
+
+        @keyframes revealText {
+            from {
+                opacity: 0;
+                filter: blur(5px);
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateX(0);
+            }
+        }    .signature {
+            margin-top: 1rem;
+            cursor: pointer;
+            opacity: 0;
+            animation: revealSignature 0.8s ease-out forwards 1.2s;
+            position: relative;
+        }
+
+        .signature-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            animation: floatSignature 6s ease-in-out infinite;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px var(--purple-transparent));
+        }
+
+        .signature.playing .signature-img {
+            filter: drop-shadow(0 0 15px var(--purple-cornflower));
+        }
+
+        .signature:hover .signature-img {
+            transform: scale(1.1);
+        }
+
+        @keyframes floatSignature {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotate(5deg);
+            }
+            75% {
+                transform: translateY(10px) rotate(-5deg);
+            }
+        }
+
+        @keyframes revealSignature {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="cursor-dot"></div>
+    
+    <nav class="nav-dots">
+        <div class="nav-dot active" data-tooltip="Home" onclick="scrollToSection('hero')"></div>
+        <div class="nav-dot" data-tooltip="Portfolio" onclick="scrollToSection('portfolio')"></div>
+        <div class="nav-dot" data-tooltip="Contact" onclick="scrollToSection('contact')"></div>    <section id="hero" class="hero">
+        <div class="hero-card">
+            <div class="avatar-container">
+                <div class="avatar-bg"></div>
+                <img src="assets/kyrie.png" alt="Kyrie" class="avatar">
+                </div>
+            <div class="user-info">
+                <h1>Kyrie</h1>
+                <span class="title">Freelance Designer</span>
+                <p>VALKYRIE GLASC</p>
+            </div>
+        </div>        <div class="signature" onclick="toggleAudio()">
+            <img src="assets/ytb small icon.png" alt="Signature" class="signature-img">
+            <div class="volume-indicator"></div>
+            <audio id="signatureAudio" src="assets/starting.mp4" preload="auto"></audio>
+        </div>
+    </section>
+    <div class="scroll-bottom" onclick="scrollToSection('contact')">
+    <i class="fas fa-chevron-down"></i>
+</div>
+    <section id="portfolio" class="portfolio">
+        <div class="portfolio-categories">
+            <button class="category-btn active" data-category="all">All Work</button>
+            <button class="category-btn" data-category="avatar">Avatars</button>
+            <button class="category-btn" data-category="thumbnail">Thumbnails</button>
+            <button class="category-btn" data-category="banner">Banners</button>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar 1 100.png" alt="Avatar Design">
+                <div class="item-title">Avatar Design - 1/100</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar aligatorbitesneverheal.png" alt="Aligator Bites Avatar">
+                <div class="item-title">Aligator Bites - Avatar Design</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar born again.png" alt="Born Again Avatar">
+                <div class="item-title">Born Again - Character Design</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar citopia.png" alt="Citopia Avatar">
+                <div class="item-title">Citopia - Avatar Design</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar flvr.png" alt="FLVR Avatar">
+                <div class="item-title">FLVR - Brand Avatar</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar link.png" alt="Link Avatar">
+                <div class="item-title">Link - Character Design</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar pickleball.png" alt="Pickleball Avatar">
+                <div class="item-title">Pickleball - Sports Design</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar tlinh.png" alt="TLINH Avatar">
+                <div class="item-title">TLINH - Artist Avatar</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/avatar_hitmehardandsoft.png" alt="Hit Me Hard And Soft">
+                <div class="item-title">Hit Me Hard And Soft</div>
+            </div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/streamthumbnail.jpg" alt="Stream Thumbnail">
+                <div class="item-title">Stream Thumbnail Design</div>
+            </div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/thumbnail stream new.png" alt="New Stream Thumbnail">
+                <div class="item-title">New Stream Visual Design</div>
+            </div>
+            <div class="portfolio-item" data-category="banner">
+                <img src="mywork/ytb banner 2.jpg" alt="YouTube Banner">
+                <div class="item-title">YouTube Channel Art</div>
+            </div>
+            <div class="portfolio-item" data-category="avatar">
+                <img src="mywork/ytb icon 2.jpg" alt="YouTube Icon">
+                <div class="item-title">YouTube Profile Icon</div>
+            </div>
+            <div class="portfolio-item" data-category="artwork">
+                <img src="mywork/tlinh cassette.png" alt="TLINH Cassette">
+                <div class="item-title">TLINH - Cassette Art</div>
+            </div>
+            <div class="portfolio-item" data-category="artwork">
+                <img src="mywork/9citypop.png" alt="City Pop Art">
+                <div class="item-title">City Pop Artwork</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 style="font-family: roboto mono, sans-serif; font-size: 1rem;"">"Valkyrie Glasc at your service."</h2>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </section>    
+<script>
+        // Custom cursor
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        let dotX = 0;
+        let dotY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });        function animateCursor() {
+            // Smooth cursor following with lerp
+            const easing = 0.15; // Slightly faster response
+            cursorX += (mouseX - cursorX) * easing;
+            cursorY += (mouseY - cursorY) * easing;
+            
+            // Dot follows even more quickly for better responsiveness
+            dotX += (mouseX - dotX) * 0.6;
+            dotY += (mouseY - dotY) * 0.6;
+            
+            cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 10}px, 0)`;
+            cursorDot.style.transform = `translate3d(${dotX - 2}px, ${dotY - 2}px, 0)`;
+            
+            requestAnimationFrame(animateCursor);
+        }
+
+        animateCursor();
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseout', () => {
+            cursor.style.opacity = '0';
+            cursorDot.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseover', () => {
+            cursor.style.opacity = '1';
+            cursorDot.style.opacity = '1';
+        });
+
+        // Smooth scroll function
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Update active dot on scroll
+        const sections = ['hero', 'portfolio', 'contact'];
+        const dots = document.querySelectorAll('.nav-dot');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                const rect = element.getBoundingClientRect();
+                if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                    current = section;
+                }
+            });
+
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('data-tooltip').toLowerCase() === current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+
+        // Create floating flowers
+        function createFlowers() {
+            const flowers = 20;
+            for (let i = 0; i < flowers; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'floating-flower';
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.top = Math.random() * 100 + 'vh';
+                flower.style.transform = `scale(${Math.random() * 2 + 0.5})`;
+                flower.style.animation = `dreamyFloat ${Math.random() * 4 + 4}s ease-in-out infinite`;
+                flower.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(flower);
+            }
+        }
+
+        createFlowers();        // Portfolio filtering and animation
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateZ(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Find the portfolio items event listener section and replace with:
+
+portfolioItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateZ(-50px)';
+    // Remove the transition from initial state
+    item.style.transition = `opacity 0.8s ease-out ${index * 0.1}s`;
+    observer.observe(item);
+
+    // Enhanced cursor-following hover effect
+    item.addEventListener('mousemove', (e) => {
+        // Remove transition during mouse movement for immediate response
+        item.style.transition = 'none';
+        
+        const rect = item.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 4;
+        const centerY = rect.top + rect.height / 4;
+        
+        const deltaX = e.clientX - centerX;
+        const deltaY = e.clientY - centerY;
+        
+        const angleX = (deltaY / rect.height) * 10;
+        const angleY = (deltaX / rect.width) * 10;
+
+        requestAnimationFrame(() => {
+            item.style.transform = `
+                perspective(1000px)
+                rotateX(${-angleX}deg)
+                rotateY(${angleY}deg)
+                translateZ(50px)
+            `;
+        });
+    });
+
+    // Add transition only when mouse leaves
+    item.addEventListener('mouseleave', () => {
+        item.style.transition = 'all 0.5s ease-out';
+        item.style.transform = 'translateZ(0) rotateX(0) rotateY(0)';
+    });
+});
+        // Category filtering
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const category = button.dataset.category;
+
+                // Filter items
+                portfolioItems.forEach((item, index) => {
+                    const itemCategory = item.dataset.category;
+                    if (category === 'all' || category === itemCategory) {
+                        item.style.display = 'block';
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateZ(-50px)';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateZ(0)';
+                        }, index * 100);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Audio toggle functionality
+        function toggleAudio() {
+            const audio = document.getElementById('signatureAudio');
+            const signature = document.querySelector('.signature');
+            const volumeIndicator = document.querySelector('.volume-indicator');
+
+            if (audio.paused) {
+                audio.volume = 0;
+                audio.play();
+                signature.classList.add('playing');
+                
+                // Fade in the audio
+                let volume = 0;
+                const fadeIn = setInterval(() => {
+                    if (volume < 1) {
+                        volume += 0.1;
+                        audio.volume = volume;
+                        volumeIndicator.style.transform = `translateX(-50%) scaleX(${volume})`;
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, 100);
+            } else {
+                // Fade out the audio
+                let volume = audio.volume;
+                const fadeOut = setInterval(() => {
+                    if (volume > 0) {
+                        volume -= 0.1;
+                        audio.volume = volume;
+                        volumeIndicator.style.transform = `translateX(-50%) scaleX(${volume})`;
+                    } else {
+                        clearInterval(fadeOut);
+                        audio.pause();
+                        audio.currentTime = 0;
+                        signature.classList.remove('playing');
+                    }
+                }, 100);
+            }
+        }
+
+        // Create floating cornflowers
+        function createCornflower() {
+            const cornflower = document.createElement('div');
+            cornflower.className = 'floating-cornflower';
+            
+            // Random size between 20px and 50px
+            const size = Math.random() * 30 + 20;
+            cornflower.style.width = `${size}px`;
+            cornflower.style.height = `${size}px`;
+            
+            // Random starting position
+            const startPos = Math.random() * window.innerWidth;
+            cornflower.style.left = `${startPos}px`;
+            
+            // Random animation duration between 10 and 20 seconds
+            const duration = Math.random() * 10 + 10;
+            cornflower.style.animation = `floatUp ${duration}s linear infinite`;
+            
+            document.body.appendChild(cornflower);
+            
+            // Remove element after one animation cycle
+            setTimeout(() => {
+                cornflower.remove();
+            }, duration * 1000);
+        }
+
+        // Create new cornflower every 2 seconds
+        setInterval(createCornflower, 2000);
+
+        // Initial cornflowers
+        for(let i = 0; i < 5; i++) {
+            createCornflower();
+        }
+    </script>
+
+</body>
+</html>

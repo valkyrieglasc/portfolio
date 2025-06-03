@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Circle with Cyberpunk Style -->
+    <circle cx="256" cy="256" r="248" fill="#0a0a0a" stroke="#6B5B95" stroke-width="16"/>
+      <!-- Stylized 'K' for Kyrie -->
+    <path d="M160 120 L160 392 L190 392 L190 270 L310 392 L355 392 L230 264 L345 120 L300 120 L190 252 L190 120Z"
+          fill="#6B5B95"
+          stroke-width="0">
+        <animate attributeName="stroke" 
+                 values="#6B5B95;#8474ac;#6B5B95" 
+                 dur="4s" 
+                 repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Decorative Cyber Elements -->
+    <circle cx="256" cy="256" r="180" 
+            stroke="#6B5B95" 
+            stroke-width="2" 
+            stroke-dasharray="8 8" 
+            opacity="0.3">
+        <animateTransform attributeName="transform"
+                         attributeType="XML"
+                         type="rotate"
+                         from="0 256 256"
+                         to="360 256 256"
+                         dur="20s"
+                         repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Glowing Accent -->
+    <circle cx="256" cy="256" r="200" 
+            stroke="#8474ac" 
+            stroke-width="1" 
+            opacity="0.2">
+        <animate attributeName="opacity"
+                 values="0.2;0.5;0.2"
+                 dur="3s"
+                 repeatCount="indefinite"/>
+        <animate attributeName="r"
+                 values="200;210;200"
+                 dur="3s"
+                 repeatCount="indefinite"/>
+    </circle>
+</svg>
