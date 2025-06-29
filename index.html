@@ -621,13 +621,17 @@
     <i class="fas fa-chevron-down"></i>
 </div>
     <section id="portfolio" class="portfolio">
-        <div class="portfolio-categories">
-            <button class="category-btn active" data-category="all">All Work</button>
-            <button class="category-btn" data-category="avatar">Avatars</button>
-            <button class="category-btn" data-category="thumbnail">Thumbnails</button>
-            <button class="category-btn" data-category="banner">Banners</button>
-        </div>
-        <div class="portfolio-grid">
+    <div class="portfolio-categories">
+        <button class="category-btn active" data-category="all">Tất cả</button>
+        <button class="category-btn" data-category="avatar">Avatar</button>
+        <button class="category-btn" data-category="thumbnail">Thumbnail</button>
+        <button class="category-btn" data-category="banner">Banner</button>
+        <button class="category-btn" data-category="artwork">Artwork</button>
+    </div>
+    <div class="portfolio-grid">
+        <!-- AVATAR -->
+        <div class="portfolio-group" data-group="avatar">
+            <div class="portfolio-group-title"></div>
             <div class="portfolio-item" data-category="avatar">
                 <img src="mywork/avatar 1 100.png" alt="Avatar Design">
                 <div class="item-title">Avatar Design - 1/100</div>
@@ -663,26 +667,55 @@
             <div class="portfolio-item" data-category="avatar">
                 <img src="mywork/avatar_hitmehardandsoft.png" alt="Hit Me Hard And Soft">
                 <div class="item-title">Hit Me Hard And Soft</div>
+            </div>
             <div class="portfolio-item" data-category="avatar">
-                <img src="mywork/retrofunk_ultrakilll.png" alt="Hit Me Hard And Soft">
+                <img src="mywork/retrofunk_ultrakilll.png" alt="ULTRAKILL Retro Funk">
                 <div class="item-title">ULTRAKILL Retro Funk</div>
-            </div>
-            <div class="portfolio-item" data-category="thumbnail">
-                <img src="mywork/streamthumbnail.jpg" alt="Stream Thumbnail">
-                <div class="item-title">Stream Thumbnail Design</div>
-            </div>
-            <div class="portfolio-item" data-category="thumbnail">
-                <img src="mywork/thumbnail stream new.png" alt="New Stream Thumbnail">
-                <div class="item-title">New Stream Visual Design</div>
-            </div>
-            <div class="portfolio-item" data-category="banner">
-                <img src="mywork/ytb banner 2.jpg" alt="YouTube Banner">
-                <div class="item-title">YouTube Channel Art</div>
             </div>
             <div class="portfolio-item" data-category="avatar">
                 <img src="mywork/ytb icon 2.jpg" alt="YouTube Icon">
                 <div class="item-title">YouTube Profile Icon</div>
             </div>
+        </div>
+        <!-- THUMBNAIL -->
+        <div class="portfolio-group" data-group="thumbnail">
+            <div class="portfolio-group-title"></div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/streamthumbnail.jpg" alt="Stream Thumbnail">
+                <div class="item-title">Stream Thumbnail Design</div>
+            </div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/old client_1.png" alt="Stream Thumbnail">
+                <div class="item-title">Youtube Thumbnail For My Old Client</div>
+            </div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/old client_2.png" alt="Stream Thumbnail">
+                <div class="item-title">Youtube Thumbnail For My Old Client</div>
+            </div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/old client_3.png" alt="Stream Thumbnail">
+                <div class="item-title">Youtube Thumbnail For My Old Client</div>
+            </div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/old client_4.png" alt="Stream Thumbnail">
+                <div class="item-title">Youtube Thumbnail For My Old Client</div>
+            </div>
+            <div class="portfolio-item" data-category="thumbnail">
+                <img src="mywork/thumbnail stream new.png" alt="New Stream Thumbnail">
+                <div class="item-title">New Stream Visual Design</div>
+            </div>
+        </div>
+        <!-- BANNER -->
+        <div class="portfolio-group" data-group="banner">
+            <div class="portfolio-group-title"></div>
+            <div class="portfolio-item" data-category="banner">
+                <img src="mywork/ytb banner 2.jpg" alt="YouTube Banner">
+                <div class="item-title">YouTube Channel Art</div>
+            </div>
+        </div>
+        <!-- ARTWORK -->
+        <div class="portfolio-group" data-group="artwork">
+            <div class="portfolio-group-title"></div>
             <div class="portfolio-item" data-category="artwork">
                 <img src="mywork/tlinh cassette.png" alt="TLINH Cassette">
                 <div class="item-title">TLINH - Cassette Art</div>
@@ -692,7 +725,8 @@
                 <div class="item-title">City Pop Artwork</div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="contact" class="contact">
         <h2 style="font-family: roboto mono, sans-serif; font-size: 1rem;"">"Valkyrie Glasc at your service."</h2>
@@ -789,6 +823,7 @@
 
         createFlowers();        // Portfolio filtering and animation
         const categoryButtons = document.querySelectorAll('.category-btn');
+        const portfolioGroups = document.querySelectorAll('.portfolio-group');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
         const observerOptions = {
             threshold: 0.2,
@@ -847,27 +882,30 @@ portfolioItems.forEach((item, index) => {
         // Category filtering
         categoryButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Update active button
                 categoryButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-
                 const category = button.dataset.category;
 
-                // Filter items
-                portfolioItems.forEach((item, index) => {
-                    const itemCategory = item.dataset.category;
-                    if (category === 'all' || category === itemCategory) {
-                        item.style.display = 'block';
-                        item.style.opacity = '0';
-                        item.style.transform = 'translateZ(-50px)';
-                        setTimeout(() => {
-                            item.style.opacity = '1';
-                            item.style.transform = 'translateZ(0)';
-                        }, index * 100);
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+                if (category === 'all') {
+                    portfolioGroups.forEach(group => group.style.display = '');
+                    portfolioItems.forEach(item => item.style.display = '');
+                } else {
+                    portfolioGroups.forEach(group => {
+                        if (group.dataset.group === category) {
+                            group.style.display = '';
+                        } else {
+                            group.style.display = 'none';
+                        }
+                    });
+                    // Đảm bảo chỉ hiện các item đúng loại trong group (nếu cần)
+                    portfolioItems.forEach(item => {
+                        if (item.dataset.category === category) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = '';
+                        }
+                    });
+                }
             });
         });
 
